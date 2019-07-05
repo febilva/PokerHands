@@ -23,16 +23,25 @@ defmodule PokerPlay do
       |> Enum.map(fn x -> String.split(x, "", trim: true) end)
       |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
 
-    white
-    # find_hand_type(white)
+    # white
+    find_hand_type(white)
     # find_hand_type(black)
   end
 
   def find_hand_type(cards) do
     cards
     |> arrange_cards()
+    |> hand_type(cards)
+  end
 
-    # |> hand_type(cards)
+  defp hand_type(arranged_cards, hand) do
+    cond do
+      PokerPlay.Pair.check(arranged_cards, hand) ->
+        "Pair Hand"
+
+      true ->
+        "High Hand"
+    end
   end
 
   def arrange_cards(cards) do
@@ -43,19 +52,4 @@ defmodule PokerPlay do
     |> Enum.reverse()
     |> Enum.map(fn {_int_value, items} -> Enum.map(items, & &1.value) end)
   end
-
-  # defp split_
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> PokerPlay.hello()
-      :world
-
-  """
-  # def hello do
-  #   :world
-  # end
 end
