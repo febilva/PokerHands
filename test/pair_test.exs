@@ -12,7 +12,7 @@ defmodule PokerPlay.PairTest do
 
     arranged_cards_value = PokerPlay.arrange_cards(cards)
 
-    assert PokerPlay.Pair.check(arranged_cards_value, cards) == true
+    assert PokerPlay.Pair.check(arranged_cards_value) == true
   end
 
   test "check whether the hand is not a pair of kind" do
@@ -24,6 +24,6 @@ defmodule PokerPlay.PairTest do
 
     arranged_cards_value = PokerPlay.arrange_cards(cards)
 
-    assert PokerPlay.Pair.check(arranged_cards_value, cards) == false
+    assert PokerPlay.Pair.check(arranged_cards_value) == false
   end
 end
