@@ -10,9 +10,9 @@ defmodule PokerPlay.FlushTest do
       |> Enum.map(fn x -> String.split(x, "", trim: true) end)
       |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
 
-    arranged_cards_value = PokerPlay.arrange_cards(cards)
+    # arranged_cards_value = PokerPlay.arrange_cards(cards)
 
-    assert PokerPlay.Flush.check(arranged_cards_value, cards) == true
+    assert PokerPlay.Flush.check(cards) == true
   end
 
   test "check wheather the hand is  not a Flush hand" do
@@ -22,8 +22,8 @@ defmodule PokerPlay.FlushTest do
       |> Enum.map(fn x -> String.split(x, "", trim: true) end)
       |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
 
-    arranged_cards_value = PokerPlay.arrange_cards(cards)
+    # arranged_cards_value = PokerPlay.arrange_cards(cards)
 
-    assert PokerPlay.Flush.check(arranged_cards_value, cards) == false
+    assert PokerPlay.Flush.check(cards) == false
   end
 end

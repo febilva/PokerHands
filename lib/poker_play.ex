@@ -11,21 +11,23 @@ defmodule PokerPlay do
   require IEx
 
   def compare(hand1, hand2) do
-    white =
+    black =
       hand1
       |> Card.format_input()
       |> Enum.map(fn x -> String.split(x, "", trim: true) end)
       |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
+      |> Enum.sort_by(fn x -> x.int_value end)
+      |> Enum.reverse()
 
-    black =
+    white =
       hand2
       |> Card.format_input()
       |> Enum.map(fn x -> String.split(x, "", trim: true) end)
       |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
+      |> Enum.sort_by(fn x -> x.int_value end)
+      |> Enum.reverse()
 
-    # white
-    find_hand_type(white)
-    # find_hand_type(black)
+    find_hand_type(black)
   end
 
   def find_hand_type(cards) do
@@ -34,13 +36,21 @@ defmodule PokerPlay do
     |> hand_type(cards)
   end
 
-  defp hand_type(arranged_cards, hand) do
+  defp hand_type(arranged_cards, cards) do
+    # IEx.pry()
+
     cond do
-      PokerPlay.Pair.check(arranged_cards, hand) ->
-        "Pair Hand"
+      PokerPlay.Pair.check(arranged_cards, cards) ->
+        "Pair Card Hand"
+
+      PokerPlay.Flush.check(cards) ->
+        "Flush Card Hand"
+
+      PokerPlay.Straight.check(cards) ->
+        "Straight Card Hand"
 
       true ->
-        "High Hand"
+        "High Card Hand"
     end
   end
 
