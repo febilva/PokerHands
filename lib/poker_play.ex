@@ -11,23 +11,19 @@ defmodule PokerPlay do
   require IEx
 
   def compare(hand1, hand2) do
-    black =
-      hand1
-      |> Card.format_input()
-      |> Enum.map(fn x -> String.split(x, "", trim: true) end)
-      |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
-      |> Enum.sort_by(fn x -> x.int_value end)
-      |> Enum.reverse()
-
-    white =
-      hand2
-      |> Card.format_input()
-      |> Enum.map(fn x -> String.split(x, "", trim: true) end)
-      |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
-      |> Enum.sort_by(fn x -> x.int_value end)
-      |> Enum.reverse()
-
+    black = hand1 |> hand_initialization()
+    white = hand2 |> hand_initialization()
     find_hand_type(black)
+    find_hand_type(white)
+  end
+
+  def hand_initialization(hand_input) do
+    hand_input
+    |> Card.format_input()
+    |> Enum.map(fn x -> String.split(x, "", trim: true) end)
+    |> Enum.map(fn x -> Card.init(Enum.at(x, 0), Enum.at(x, 1)) end)
+    |> Enum.sort_by(fn x -> x.int_value end)
+    |> Enum.reverse()
   end
 
   def find_hand_type(cards) do
@@ -37,9 +33,10 @@ defmodule PokerPlay do
   end
 
   defp hand_type(arranged_cards, cards) do
-    # IEx.pry()
-
     cond do
+      PokerPlay.StraightFlush.check(arranged_cards, cards) ->
+        "Straight Flush Hand"
+
       PokerPlay.Pair.check(arranged_cards, cards) ->
         "Pair Card Hand"
 
