@@ -35,31 +35,31 @@ defmodule PokerPlay do
   defp hand_type(arranged_cards, cards) do
     cond do
       PokerPlay.StraightFlush.check(cards) ->
-        "Straight Flush Hand"
+        "StraightFlush"
 
       PokerPlay.FourOfKind.check(arranged_cards) ->
-        "Four Of Kind Card Hand"
+        "FourOfAKind"
 
       PokerPlay.FullHouse.check(arranged_cards) ->
-        "Full House Kind of Card Hand"
+        "FullHouse"
 
       PokerPlay.Flush.check(cards) ->
-        "Flush Card Hand"
+        "Flush"
 
       PokerPlay.Straight.check(cards) ->
-        "Straight Card Hand"
+        "Straight"
 
       PokerPlay.ThreeOfKind.check(arranged_cards) ->
-        "Three Of Kind Card Hand"
+        "ThreeOfAKind"
 
       PokerPlay.TwoPair.check(arranged_cards) ->
-        "Two Pair Card Hand"
+        "TwoPairs"
 
       PokerPlay.Pair.check(arranged_cards) ->
-        "Pair Card Hand"
+        "Pair"
 
       true ->
-        "High Card Hand"
+        "HighCard"
     end
   end
 

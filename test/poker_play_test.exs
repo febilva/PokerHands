@@ -90,7 +90,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3D 8S 5C 6D"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "High Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "HighCard"
   end
 
   test "this should return the type of a hand is Pair Card Hand" do
@@ -98,7 +98,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3D 2S 5C 6D"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Pair Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "Pair"
   end
 
   test "this should return the type of a hand is Two Pair Card Hand" do
@@ -106,7 +106,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3D 2S 5C 5D"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Two Pair Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "TwoPairs"
   end
 
   test "this should return the type of a hand is Three Pair Card Hand" do
@@ -114,7 +114,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3D 2S 5C 2D"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Three Of Kind Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "ThreeOfAKind"
   end
 
   test "this should return the type of a hand is Straight Card Hand" do
@@ -122,7 +122,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3D 4S 5C 6D"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Straight Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "Straight"
   end
 
   test "this should return the type of a hand is Flush Card Hand" do
@@ -130,7 +130,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3H 2H 5H 6H"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Flush Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "Flush"
   end
 
   test "this should return the type of a hand is Full House kind" do
@@ -138,7 +138,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3D 2S 2C 3S"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Full House Kind of Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "FullHouse"
   end
 
   test "this should return the type of a hand is Four of Hind Card" do
@@ -146,7 +146,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3D 2S 2C 2D"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Four Of Kind Card Hand"
+    assert PokerPlay.find_hand_type(cards) == "FourOfAKind"
   end
 
   test "this should return the type of a hand is Straight Flush Hand Card " do
@@ -154,7 +154,7 @@ defmodule PokerPlayTest do
       "Black: 2H 3H 4H 5H 6H"
       |> PokerPlay.hand_initialization()
 
-    assert PokerPlay.find_hand_type(cards) == "Straight Flush Hand"
+    assert PokerPlay.find_hand_type(cards) == "StraightFlush"
   end
 
   # test
