@@ -1,5 +1,6 @@
 defmodule PokerPlay do
   alias PokerPlay.Card
+  alias PokerPlay.Hand.Compare
 
   @moduledoc """
   Documentation for PokerPlay.
@@ -13,8 +14,47 @@ defmodule PokerPlay do
   def compare(hand1, hand2) do
     black = hand1 |> hand_initialization()
     white = hand2 |> hand_initialization()
-    find_hand_type(black)
-    find_hand_type(white)
+
+    black_hand_type = find_hand_type(black)
+    white_hand_type = find_hand_type(white)
+
+    result = Compare.compare(white_hand_type, black_hand_type)
+
+    case result do
+      ^white_hand_type ->
+        "White wins - #{white_hand_type}"
+
+      ^black_hand_type ->
+        "Black wins - #{black_hand_type}"
+
+      {:tie, type} ->
+        black_hand_values =
+          black
+          |> arrange_cards()
+          |> PokerPlay.HighCard.high_card_values()
+
+        white_hand_values =
+          white
+          |> arrange_cards()
+          |> PokerPlay.HighCard.high_card_values()
+
+        PokerPlay.HandValue.compare(black_hand_values, white_hand_values)
+        |> case do
+          {:left, higher_rank_card_value} ->
+            higher_card = higher_rank_card_value |> Card.char_value()
+            "Black wins - high card: #{higher_card}"
+
+          {:right, higher_rank_card_value} ->
+            higher_card = higher_rank_card_value |> Card.char_value()
+            "White wins - high card: #{higher_card}"
+
+          :tie ->
+            "Tie"
+        end
+
+      _ ->
+        nil
+    end
   end
 
   def hand_initialization(hand_input) do
@@ -35,31 +75,31 @@ defmodule PokerPlay do
   defp hand_type(arranged_cards, cards) do
     cond do
       PokerPlay.StraightFlush.check(cards) ->
-        "Straight Flush Hand"
+        "StraightFlush"
 
       PokerPlay.FourOfKind.check(arranged_cards) ->
-        "Four Of Kind Card Hand"
+        "FourOfAKind"
 
       PokerPlay.FullHouse.check(arranged_cards) ->
-        "Full House Kind of Card Hand"
+        "FullHouse"
 
       PokerPlay.Flush.check(cards) ->
-        "Flush Card Hand"
+        "Flush"
 
       PokerPlay.Straight.check(cards) ->
-        "Straight Card Hand"
+        "Straight"
 
       PokerPlay.ThreeOfKind.check(arranged_cards) ->
-        "Three Of Kind Card Hand"
+        "ThreeOfAKind"
 
       PokerPlay.TwoPair.check(arranged_cards) ->
-        "Two Pair Card Hand"
+        "TwoPairs"
 
       PokerPlay.Pair.check(arranged_cards) ->
-        "Pair Card Hand"
+        "Pair"
 
       true ->
-        "High Card Hand"
+        "HighCard"
     end
   end
 
