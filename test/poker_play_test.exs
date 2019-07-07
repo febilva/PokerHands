@@ -157,5 +157,39 @@ defmodule PokerPlayTest do
     assert PokerPlay.find_hand_type(cards) == "StraightFlush"
   end
 
+  test "Find the higer rank hand from the input" do
+    assert PokerPlay.compare("Black: 2H 3D 5S 9C KD", "White: 2C 3H 4S 8C AH") ==
+             "White wins - high card: Ace"
+
+    assert PokerPlay.compare("Black: 2H 4S 4C 3D 4H", "White: 2S 8S AS QS 3S") ==
+             "White wins - Flush"
+
+    assert PokerPlay.compare("Black: 2H 3D 5S 9C KD", "White: 2C 3H 4S 8C KH") ==
+             "Black wins - high card: 9"
+
+    assert PokerPlay.compare("Black: 2H 3D 5S 9C KD", "White:  2D 3H 5C 9S KH") == "Tie"
+
+    assert PokerPlay.compare("Black: 2H 4S 2S AH 6D", "White: 2H 3H 4H 5H 6H") ==
+             "White wins - StraightFlush"
+
+    assert PokerPlay.compare("Black: 2H 4S 2S AH 6D", "White: 2H 3D 5S 9C KD") ==
+             "Black wins - Pair"
+
+    assert PokerPlay.compare("Black: 2H 4S 2S AH 2D", "White: 2H 3D 5S 9C KD") ==
+             "Black wins - ThreeOfAKind"
+
+    assert PokerPlay.compare("Black: 2H 4S 2S 2H 2D", "White: 2H 3D 5S 9C KD") ==
+             "Black wins - FourOfAKind"
+
+    assert PokerPlay.compare("Black: 2H 4S 2S 2H 4D", "White: 2H 3D 5S 9C KD") ==
+             "Black wins - FullHouse"
+
+    assert PokerPlay.compare("Black: 2H 4S 2H 4H 9H", "White: 2H 3D 5S 9C KD") ==
+             "Black wins - TwoPairs"
+
+    # assert PokerPlay.compare("Black: 2H 3H 4H 5H 6H", "White: 2H 3H 4H 5H 6H") == "Tie"
+    # assert PokerPlay.compare("Black: 2H 3H 4H 5H 6H", "White: 2H 3H 4H 5H 6H") == "Tie"
+  end
+
   # test
 end

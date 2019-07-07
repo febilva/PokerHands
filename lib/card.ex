@@ -9,6 +9,8 @@ defmodule PokerPlay.Card do
     "A" => 14
   }
 
+  @char_value %{10 => "J", 11 => "Q", 12 => "K", 14 => "Ace"}
+
   @doc """
     initlizing the given string to Card Struct 
   """
@@ -36,5 +38,13 @@ defmodule PokerPlay.Card do
 
   def int_value(value) do
     value |> String.to_integer()
+  end
+
+  def char_value(value) when value in [10, 11, 12, 13, 14] do
+    @char_value[value]
+  end
+
+  def char_value(value) do
+    value
   end
 end

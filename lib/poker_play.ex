@@ -1,5 +1,6 @@
 defmodule PokerPlay do
   alias PokerPlay.Card
+  alias PokerPlay.Hand.Compare
 
   @moduledoc """
   Documentation for PokerPlay.
@@ -13,8 +14,47 @@ defmodule PokerPlay do
   def compare(hand1, hand2) do
     black = hand1 |> hand_initialization()
     white = hand2 |> hand_initialization()
-    find_hand_type(black)
-    find_hand_type(white)
+
+    black_hand_type = find_hand_type(black)
+    white_hand_type = find_hand_type(white)
+
+    result = Compare.compare(white_hand_type, black_hand_type)
+
+    case result do
+      ^white_hand_type ->
+        "White wins - #{white_hand_type}"
+
+      ^black_hand_type ->
+        "Black wins - #{black_hand_type}"
+
+      {:tie, type} ->
+        black_hand_values =
+          black
+          |> arrange_cards()
+          |> PokerPlay.HighCard.high_card_values()
+
+        white_hand_values =
+          white
+          |> arrange_cards()
+          |> PokerPlay.HighCard.high_card_values()
+
+        PokerPlay.HandValue.compare(black_hand_values, white_hand_values)
+        |> case do
+          {:left, higher_rank_card_value} ->
+            higher_card = higher_rank_card_value |> Card.char_value()
+            "Black wins - high card: #{higher_card}"
+
+          {:right, higher_rank_card_value} ->
+            higher_card = higher_rank_card_value |> Card.char_value()
+            "White wins - high card: #{higher_card}"
+
+          :tie ->
+            "Tie"
+        end
+
+      _ ->
+        nil
+    end
   end
 
   def hand_initialization(hand_input) do
